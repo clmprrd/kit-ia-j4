@@ -1,0 +1,932 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kit Referent IA J4</title>
+<style>
+:root {
+  --bg: #FCF7FB;
+  --bg-alt: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-soft: #FCE4F7;
+  --text: #1A1A1A;
+  --text-soft: #4A4A4A;
+  --border: #E9D3E4;
+  --accent: #E91FCB;
+  --accent-dark: #A3128E;
+  --ok-bg: #EAF6EC;
+  --ok-text: #1E5B2A;
+  --ok-border: #B9E0C2;
+  --warn-bg: #FFF3E0;
+  --warn-text: #7A4A00;
+  --warn-border: #F0D2A0;
+  --tag-client-bg: #1A1A1A;
+  --tag-client-text: #FFFFFF;
+  --tag-meta-bg: #FCE4F7;
+  --tag-meta-text: #A3128E;
+  --shadow: 0 1px 3px rgba(26,26,26,0.08);
+  --radius: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17141A;
+    --bg-alt: #1E1A22;
+    --bg-card: #221D26;
+    --bg-soft: #3A1F38;
+    --text: #F3EDF2;
+    --text-soft: #C7BEC7;
+    --border: #3A3040;
+    --accent: #F04FD6;
+    --accent-dark: #FF8AE8;
+    --ok-bg: #163422;
+    --ok-text: #8FE0A6;
+    --ok-border: #245C36;
+    --warn-bg: #3A2A0E;
+    --warn-text: #F0C878;
+    --warn-border: #5C4318;
+    --tag-client-bg: #F3EDF2;
+    --tag-client-text: #1A1A1A;
+    --tag-meta-bg: #3A1F38;
+    --tag-meta-text: #F04FD6;
+    --shadow: 0 1px 3px rgba(0,0,0,0.4);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #17141A;
+  --bg-alt: #1E1A22;
+  --bg-card: #221D26;
+  --bg-soft: #3A1F38;
+  --text: #F3EDF2;
+  --text-soft: #C7BEC7;
+  --border: #3A3040;
+  --accent: #F04FD6;
+  --accent-dark: #FF8AE8;
+  --ok-bg: #163422;
+  --ok-text: #8FE0A6;
+  --ok-border: #245C36;
+  --warn-bg: #3A2A0E;
+  --warn-text: #F0C878;
+  --warn-border: #5C4318;
+  --tag-client-bg: #F3EDF2;
+  --tag-client-text: #1A1A1A;
+  --tag-meta-bg: #3A1F38;
+  --tag-meta-text: #F04FD6;
+  --shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.55;
+  margin: 0;
+  padding: 0;
+}
+
+.wrap {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 4rem;
+}
+
+header.hero {
+  padding: 1.5rem 1rem 1.75rem;
+  background: linear-gradient(160deg, var(--bg-soft), var(--bg));
+  border-bottom: 1px solid var(--border);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent-dark);
+  margin: 0 0 0.4rem;
+}
+
+h1 {
+  font-size: 1.55rem;
+  line-height: 1.25;
+  margin: 0 0 0.5rem;
+  color: var(--text);
+}
+
+.hero-sub {
+  color: var(--text-soft);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.9rem;
+}
+
+.pill {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-soft);
+}
+
+nav.toc {
+  margin: 1.25rem 0 0;
+  padding: 0.9rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+nav.toc p {
+  margin: 0 0 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-soft);
+}
+
+nav.toc ol {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.9rem;
+  columns: 1;
+}
+
+nav.toc li { margin-bottom: 0.3rem; }
+nav.toc a { color: var(--text); text-decoration: none; }
+nav.toc a:hover { color: var(--accent); }
+
+section {
+  margin-top: 2.25rem;
+  scroll-margin-top: 1rem;
+}
+
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.85rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin: 0;
+  color: var(--text);
+}
+
+h3 {
+  font-size: 1rem;
+  margin: 1.1rem 0 0.5rem;
+  color: var(--text);
+}
+
+p { margin: 0 0 0.75rem; }
+
+.lead {
+  font-size: 0.98rem;
+  color: var(--text-soft);
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 0.9rem;
+}
+
+.card + .card { margin-top: 0.7rem; }
+
+.tag {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  margin-right: 0.4rem;
+  vertical-align: middle;
+}
+
+.tag-client { background: var(--tag-client-bg); color: var(--tag-client-text); }
+.tag-meta { background: var(--tag-meta-bg); color: var(--tag-meta-text); }
+
+.rules-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.6rem;
+}
+
+.rule-item {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.7rem 0.85rem;
+}
+
+.rule-item .dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 0.45rem;
+  flex-shrink: 0;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 1rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 34rem;
+  font-size: 0.86rem;
+  background: var(--bg-card);
+}
+
+table.narrow { min-width: 22rem; }
+table.wide { min-width: 44rem; }
+
+th, td {
+  text-align: left;
+  padding: 0.55rem 0.7rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+thead th {
+  background: var(--bg-soft);
+  color: var(--accent-dark);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  position: sticky;
+  top: 0;
+}
+
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:nth-child(even) { background: var(--bg-alt); }
+
+.badge-fait {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  background: var(--ok-bg);
+  color: var(--ok-text);
+  border: 1px solid var(--ok-border);
+}
+
+.badge-valeur {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  background: var(--warn-bg);
+  color: var(--warn-text);
+  border: 1px solid var(--warn-border);
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+}
+
+@media (min-width: 640px) {
+  .two-col { grid-template-columns: 1fr 1fr; }
+  nav.toc ol { columns: 2; }
+}
+
+.col-box {
+  border-radius: var(--radius);
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+}
+
+.col-do {
+  background: var(--ok-bg);
+  border-color: var(--ok-border);
+}
+
+.col-dont {
+  background: var(--warn-bg);
+  border-color: var(--warn-border);
+}
+
+.col-do h3, .col-dont h3 { margin-top: 0; }
+.col-do h3 { color: var(--ok-text); }
+.col-dont h3 { color: var(--warn-text); }
+
+.col-box ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.col-box li { margin-bottom: 0.5rem; font-size: 0.9rem; }
+
+.example-box {
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 0.85rem 1rem;
+  font-size: 0.9rem;
+}
+
+.example-good {
+  background: var(--ok-bg);
+  border-color: var(--ok-border);
+}
+
+.example-bad {
+  background: var(--warn-bg);
+  border-color: var(--warn-border);
+}
+
+.example-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.example-good .example-label { color: var(--ok-text); }
+.example-bad .example-label { color: var(--warn-text); }
+
+.callout {
+  border-left: 3px solid var(--accent);
+  background: var(--bg-soft);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 0.8rem 1rem;
+  font-size: 0.9rem;
+  margin: 0.9rem 0;
+}
+
+.callout strong { color: var(--accent-dark); }
+
+.stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0.8rem 0;
+}
+
+.stat {
+  flex: 1 1 9rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.7rem 0.8rem;
+}
+
+.stat .num {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent-dark);
+  display: block;
+}
+
+.stat .lbl {
+  font-size: 0.78rem;
+  color: var(--text-soft);
+}
+
+.typology {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.6rem;
+}
+
+.typo-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.7rem 0.9rem;
+  background: var(--bg-card);
+}
+
+.typo-item .name {
+  font-weight: 700;
+  color: var(--accent-dark);
+  display: block;
+  margin-bottom: 0.2rem;
+  font-size: 0.92rem;
+}
+
+.typo-item .conduite {
+  font-size: 0.87rem;
+  color: var(--text-soft);
+}
+
+footer.page-footer {
+  margin-top: 2.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.8rem;
+  color: var(--text-soft);
+  text-align: center;
+}
+
+hr.sep {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+.checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+.checklist li:last-child { border-bottom: none; }
+
+.checklist .box {
+  width: 1rem;
+  height: 1rem;
+  border: 1.5px solid var(--accent);
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.elim {
+  border: 1px solid var(--warn-border);
+  background: var(--warn-bg);
+  border-radius: var(--radius);
+  padding: 0.85rem 1rem;
+  margin-top: 0.9rem;
+}
+
+.elim strong { color: var(--warn-text); }
+
+.not-eval {
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 0.7rem 1rem;
+  margin-top: 0.7rem;
+  font-size: 0.88rem;
+  color: var(--text-soft);
+}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+
+<header class="hero">
+  <p class="eyebrow">Nikita, Referent IA, Lyon</p>
+  <h1>Kit participants, Journee 4, mercredi 10 septembre 2026</h1>
+  <p class="hero-sub">Vous n'apprenez pas l'IA aujourd'hui, vous apprenez a la transmettre. Vous animez, vous etes observes, vous debriefez.</p>
+  <div class="hero-meta">
+    <span class="pill">20 sequences</span>
+    <span class="pill">Debrief 60 secondes</span>
+    <span class="pill">Evaluation vendredi 11/09</span>
+    <span class="pill">Commanditaire : Philippe Chauvel</span>
+  </div>
+</header>
+
+<nav class="toc">
+  <p>Sommaire</p>
+  <ol>
+    <li><a href="#deroule">Comment se passe la journee</a></li>
+    <li><a href="#grille">Grille d'observation</a></li>
+    <li><a href="#sbi">Feedback en 60 secondes (SBI)</a></li>
+    <li><a href="#refractaire">Refractaire et promoteur</a></li>
+    <li><a href="#doutes">Le tableau des doutes</a></li>
+    <li><a href="#faire">Faire et ne pas faire</a></li>
+    <li><a href="#metier">Adapter au metier de la salle</a></li>
+    <li><a href="#tourdetable">Le tour de table</a></li>
+    <li><a href="#evaluation">Ce qui est evalue vendredi</a></li>
+  </ol>
+</nav>
+
+<section id="deroule">
+  <div class="section-head">
+    <span class="step-num">1</span>
+    <h2>Comment se passe la journee</h2>
+  </div>
+  <p class="lead">Trente secondes pour comprendre les regles du jeu.</p>
+
+  <div class="card">
+    <p><strong>Double role, en permanence.</strong> Aujourd'hui la salle simule le Jour 1 du programme client « Salarie Augmente ». Ce programme est decoupe en 20 sequences. Sur chaque sequence, un participant devient formateur devant les autres, qui jouent le role d'apprenants du programme. C'est vous qui animez, pas Clement.</p>
+    <p>A tout instant vous parlez sous une des deux etiquettes suivantes, et vous les annoncez a voix haute :</p>
+    <p>
+      <span class="tag tag-client">CLIENT</span> vous delivrez le contenu exactement comme vous le feriez devant le vrai client final, dans le personnage du formateur.
+    </p>
+    <p>
+      <span class="tag tag-meta">META</span> vous sortez du personnage pour expliciter un choix d'animation : pourquoi ce silence, pourquoi cette reformulation, pourquoi vous changez de rythme ici. C'est la partie qui interesse le plus le groupe, car c'est elle qui s'apprend.
+    </p>
+  </div>
+
+  <div class="card">
+    <p><strong>Apres chaque passage : un debrief de 60 secondes.</strong> Un observateur est designe avant le passage. A la fin de la sequence, il ou elle dispose d'une minute, pas plus, pour restituer une observation utile au groupe entier, selon la methode SBI decrite en section 3. Le formateur du jour ecoute sans se justifier.</p>
+    <p><strong>Le cadrage de Clement.</strong> Clement ouvre la journee le matin, tient deux demonstrations modeles l'apres-midi pour montrer le niveau attendu, et anime le debrief collectif de cloture en fin de journee. Le reste du temps, c'est vous qui etes en scene.</p>
+  </div>
+
+  <div class="callout">
+    <strong>Ce que dit Philippe Chauvel :</strong> l'objet de la journee n'est pas d'apprendre l'IA, c'est d'apprendre a la transmettre. Chaque grille, chaque debrief, chaque exemple de ce kit sert cet objectif unique.
+  </div>
+</section>
+
+<section id="grille">
+  <div class="section-head">
+    <span class="step-num">2</span>
+    <h2>La grille d'observation</h2>
+  </div>
+  <p class="lead">Six domaines, formative, sans note. A garder ouverte pendant toute la journee, y compris quand vous n'observez pas officiellement : elle affute l'oeil.</p>
+
+  <div class="table-scroll">
+    <table class="wide">
+      <thead>
+        <tr>
+          <th style="width:30%">Domaine</th>
+          <th>Ce qu'on regarde concretement</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Cadrage et contrat de sequence</td>
+          <td>L'objectif de la sequence est-il annonce des les premieres phrases ? La duree est-elle donnee ? Le lien avec la sequence precedente est-il fait ?</td>
+        </tr>
+        <tr>
+          <td>Clarte des consignes</td>
+          <td>Une consigne est-elle formulee en une seule fois, comprehensible sans repetition ? Le formateur verifie-t-il la comprehension avant de lancer l'activite, plutot que de demander « des questions ? » dans le vide ?</td>
+        </tr>
+        <tr>
+          <td>Gestion du temps et rythme</td>
+          <td>Le temps annonce est-il tenu a plus ou moins deux minutes ? Y a-t-il une alternance visible entre temps d'apport et temps d'activite, ou un seul bloc monotone ?</td>
+        </tr>
+        <tr>
+          <td>Part reelle d'activite du participant</td>
+          <td>Sur la duree totale de la sequence, quelle proportion de temps de parole ou d'action revient aux apprenants plutot qu'au formateur ? Y a-t-il un exercice concret, ou seulement de l'ecoute ?</td>
+        </tr>
+        <tr>
+          <td>Interaction et gestion du groupe</td>
+          <td>Le formateur nomme-t-il les personnes, relance-t-il ceux qui ne parlent pas, gere-t-il un silence ou une objection sans se decontenancer ?</td>
+        </tr>
+        <tr>
+          <td>Ancrage et transfert</td>
+          <td>La sequence se ferme-t-elle sur une reformulation ou un lien explicite avec le poste de travail reel des apprenants, ou s'arrete-t-elle net sur le dernier slide ?</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="lead">Cette grille est formative : elle sert a nourrir les debriefs de 60 secondes de la journee, pas a noter. La notation arrive vendredi, avec une autre grille, celle de la section 9.</p>
+</section>
+
+<section id="sbi">
+  <div class="section-head">
+    <span class="step-num">3</span>
+    <h2>Le feedback en 60 secondes, methode SBI</h2>
+  </div>
+  <p class="lead">SBI, Situation, Behavior, Impact, vient du Center for Creative Leadership. C'est le format impose pour chaque debrief de la journee.</p>
+
+  <div class="card">
+    <p><strong>Le principe en trois temps :</strong></p>
+    <p><strong>Situation</strong> : on situe precisement le moment, sans generaliser. « Quand tu as lance l'exercice sur le prompt, vers la troisieme minute. »</p>
+    <p><strong>Behavior</strong> : on decrit un comportement observable, factuel, jamais un jugement de personnalite. « Tu as reformule la consigne deux fois avec des mots differents. »</p>
+    <p><strong>Impact</strong> : on nomme l'effet produit, sur le groupe ou sur la comprehension. « Ca a leve le flou, deux mains se sont levees juste apres. »</p>
+  </div>
+
+  <div class="two-col">
+    <div class="example-box example-good">
+      <span class="example-label">Bien formule</span>
+      <p style="margin:0">« Situation : au moment de lancer l'exercice sur le prompt. Comportement : tu as reformule la consigne deux fois, avec des mots differents a chaque fois. Impact : ca a clarifie, deux personnes qui semblaient perdues se sont mises a ecrire juste apres. »</p>
+    </div>
+    <div class="example-box example-bad">
+      <span class="example-label">Mal formule</span>
+      <p style="margin:0">« C'etait bien, tu es a l'aise, on sent que tu maitrises le sujet, continue comme ca. »</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Le sandwich compliment, critique, compliment est a bannir.</strong> Il est documente comme contre-productif : il dilue le message, l'observateur passe plus de temps a chercher le compliment d'ouverture qu'a observer, et le destinataire, habitue au procede, n'entend plus que la couche du milieu tout en trouvant l'ensemble artificiel. Un SBI direct, meme sur un point a ameliorer, est plus respectueux et plus utile qu'un sandwich qui masque le message pour l'edulcorer.
+  </div>
+</section>
+
+<section id="refractaire">
+  <div class="section-head">
+    <span class="step-num">4</span>
+    <h2>Le refractaire et le promoteur</h2>
+  </div>
+  <p class="lead">Dans tout groupe, il y a un opposant et un relais. Reperez les deux avant de reperer quoi que ce soit d'autre.</p>
+
+  <div class="card">
+    <p><strong>La regle a retenir :</strong> ne jamais engager la discussion en premier avec l'opposant. Faites parler le promoteur du groupe en premier. C'est le groupe qui convainc, ce n'est pas le formateur qui convainc seul contre un opposant, face a toute la salle.</p>
+    <p>Ce principe s'appuie sur le concept de leader d'opinion, formalise par Paul Lazarsfeld et Elihu Katz, ecole de Columbia : dans un groupe, l'information et la conviction circulent moins d'un emetteur unique vers chaque individu que par relais, via quelques personnes influentes que les autres ecoutent. Convaincre le relais convainc le groupe plus surement que convaincre chaque personne une par une.</p>
+    <p>Ca rejoint la diffusion de l'innovation d'Everett Rogers : une idee nouvelle se propage par cercles successifs, des innovateurs et adopteurs precoces vers la majorite, et ce sont ces premiers cercles qui font basculer les suivants. Le promoteur dans votre salle est souvent un adopteur precoce : s'appuyer sur lui accelere l'adoption du reste du groupe.</p>
+  </div>
+
+  <h3>Typologie des participants difficiles</h3>
+  <div class="typology">
+    <div class="typo-item">
+      <span class="name">Le sceptique</span>
+      <span class="conduite">Conduite a tenir : accueillir le doute sans le refuter frontalement, proposer une demonstration ou un cas concret plutot qu'un argument d'autorite.</span>
+    </div>
+    <div class="typo-item">
+      <span class="name">Le raleur</span>
+      <span class="conduite">Conduite a tenir : reformuler sa plainte en besoin factuel devant le groupe, puis rediriger vers l'exercice, sans laisser la plainte devenir le sujet de la sequence.</span>
+    </div>
+    <div class="typo-item">
+      <span class="name">L'expert auto-proclame</span>
+      <span class="conduite">Conduite a tenir : valider ce qui est juste dans son propos en une phrase, puis reprendre la main sur le fond et le temps, sans le laisser animer a votre place.</span>
+    </div>
+    <div class="typo-item">
+      <span class="name">Le passif</span>
+      <span class="conduite">Conduite a tenir : le solliciter par une question fermee et facile a laquelle il ne peut pas ne pas repondre, jamais une question ouverte qui l'expose.</span>
+    </div>
+  </div>
+</section>
+
+<section id="doutes">
+  <div class="section-head">
+    <span class="step-num">5</span>
+    <h2>Le tableau des doutes</h2>
+  </div>
+  <p class="lead"><strong>C'est le morceau le plus important de ce kit.</strong> Deux resistances existent en salle, et elles ne se traitent pas de la meme facon. Les confondre est l'erreur la plus couteuse d'une animation.</p>
+
+  <div class="two-col">
+    <div class="col-box col-do">
+      <h3>Objection de fait</h3>
+      <p style="margin:0 0 0.5rem">« Ca ne marche pas », « ca hallucine », « ca va me faire perdre mon poste ». La personne conteste une performance ou une consequence mesurable.</p>
+      <p style="margin:0"><strong>Se traite par la preuve.</strong> Demonstration en direct, cas d'usage sur le poste reel de la personne, chiffres verifiables. La preuve fonctionne parce que le desaccord porte sur des faits.</p>
+    </div>
+    <div class="col-box col-dont">
+      <h3>Objection de valeur</h3>
+      <p style="margin:0 0 0.5rem">« L'IA est nefaste par principe », argument environnemental, argument politique. La personne ne conteste pas l'efficacite, elle conteste la legitimite ou la desirabilite meme de l'outil.</p>
+      <p style="margin:0"><strong>Ne se traite pas par la preuve d'efficacite.</strong> Prouver que l'outil marche mieux ne repond a rien puisque l'efficacite n'est pas ce qui est conteste.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    La Moral Foundations Theory de Jonathan Haidt et Jesse Graham etablit qu'une opposition de nature morale resiste a l'argumentation factuelle : on ne fait pas ceder un jugement moral avec des chiffres, parce que le jugement moral ne s'est pas construit avec des chiffres. Face a une objection de valeur, la conduite juste est de reconnaitre le desaccord explicitement, donner les vrais chiffres sans les esquiver ni les minimiser, et ne pas chercher a convertir la personne. On respecte la position, on informe, on n'insiste pas.
+  </div>
+
+  <h3>Les chiffres environnementaux, en ordres de grandeur</h3>
+  <div class="stat-row">
+    <div class="stat">
+      <span class="num">6 a 10 fois</span>
+      <span class="lbl">plus d'electricite pour une requete d'IA generative qu'une recherche web classique</span>
+    </div>
+    <div class="stat">
+      <span class="num">460 a 1000+ TWh</span>
+      <span class="lbl">consommation mondiale des data centers, de 2022 a une projection 2026</span>
+    </div>
+    <div class="stat">
+      <span class="num">~0,5 litre</span>
+      <span class="lbl">eau mobilisee pour 10 a 50 requetes environ</span>
+    </div>
+  </div>
+  <p class="lead">Ces trois chiffres sont a donner tels quels, comme ordres de grandeur, jamais comme argument pour minimiser l'impact ni comme argument pour le dramatiser : ce sont des faits qu'on pose sur la table face a une objection de valeur, sans les instrumentaliser.</p>
+
+  <h3>Dix objections reellement entendues en salle</h3>
+  <div class="table-scroll">
+    <table class="wide">
+      <thead>
+        <tr>
+          <th style="width:30%">Objection entendue</th>
+          <th style="width:14%">Nature</th>
+          <th>Reponse a apporter</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>« Ca invente des choses, je ne peux pas m'y fier »</td>
+          <td><span class="badge-fait">Fait</span></td>
+          <td>Demonstration en direct d'une hallucination reperee, puis de la methode de verification systematique (source, recoupement). La preuve, pas la promesse.</td>
+        </tr>
+        <tr>
+          <td>« Ca va supprimer mon poste »</td>
+          <td><span class="badge-fait">Fait</span></td>
+          <td>Cas d'usage precis sur le metier de la personne : ce qui est automatisable versus ce qui reste humain, avec exemples concrets tires de son quotidien.</td>
+        </tr>
+        <tr>
+          <td>« L'IA consomme trop d'energie, c'est une aberration ecologique »</td>
+          <td><span class="badge-valeur">Valeur</span></td>
+          <td>Reconnaitre le desaccord, donner les chiffres verifies (6 a 10 fois, 460 a 1000 TWh), ne pas chercher a convaincre que c'est acceptable.</td>
+        </tr>
+        <tr>
+          <td>« Je ne veux pas etre remplace par une machine, c'est une question de principe »</td>
+          <td><span class="badge-valeur">Valeur</span></td>
+          <td>Reconnaitre la position sans la refuter, ne pas argumenter sur l'efficacite qui n'est pas le sujet ici.</td>
+        </tr>
+        <tr>
+          <td>« Ca a deja essaye chez nous, ca n'a pas marche »</td>
+          <td><span class="badge-fait">Fait</span></td>
+          <td>Demander ce qui a ete tente precisement, souvent l'echec vient d'un mauvais prompt ou d'un mauvais cas d'usage, le montrer sur un exemple corrige.</td>
+        </tr>
+        <tr>
+          <td>« C'est une mode, ca va passer »</td>
+          <td><span class="badge-fait">Fait</span></td>
+          <td>Chiffres d'adoption reels et cas d'usage deja en production dans des entreprises comparables au secteur de la personne.</td>
+        </tr>
+        <tr>
+          <td>« Ca va deshumaniser la relation client »</td>
+          <td><span class="badge-valeur">Valeur</span></td>
+          <td>Reconnaitre l'inquietude, ne pas la balayer par des statistiques de satisfaction, montrer ou l'humain reste central sans pretendre que le sujet est clos.</td>
+        </tr>
+        <tr>
+          <td>« Je n'ai pas le temps d'apprendre un nouvel outil »</td>
+          <td><span class="badge-fait">Fait</span></td>
+          <td>Chiffrer le temps gagne sur une tache concrete de son poste, en minutes reelles, pas en promesse generale.</td>
+        </tr>
+        <tr>
+          <td>« Les grandes entreprises technologiques accumulent trop de pouvoir avec l'IA »</td>
+          <td><span class="badge-valeur">Valeur</span></td>
+          <td>Reconnaitre que c'est un enjeu politique legitime, ne pas y repondre par des arguments de performance produit.</td>
+        </tr>
+        <tr>
+          <td>« Mes donnees, mes documents internes, ou vont-ils vraiment ? »</td>
+          <td><span class="badge-fait">Fait</span></td>
+          <td>Reponse factuelle et verifiable sur le traitement des donnees, les parametres de confidentialite, sans minimiser un risque reel.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="faire">
+  <div class="section-head">
+    <span class="step-num">6</span>
+    <h2>Faire et ne pas faire</h2>
+  </div>
+  <p class="lead">Des gestes d'animation concrets, observes en salle, pas des principes abstraits.</p>
+
+  <div class="two-col">
+    <div class="col-box col-do">
+      <h3>A faire</h3>
+      <ul>
+        <li>Annoncer l'objectif et la duree de la sequence avant de commencer.</li>
+        <li>Laisser le silence apres une question, meme s'il dure cinq secondes de plus que ce qui semble confortable.</li>
+        <li>Rattacher chaque exemple au metier reel de la personne en face.</li>
+        <li>Nommer les personnes par leur prenom pour relancer ou solliciter.</li>
+        <li>Verifier la comprehension avant de lancer un exercice.</li>
+        <li>Assumer un blanc ou une erreur a voix haute plutot que de l'ignorer.</li>
+        <li>Terminer chaque sequence par un lien explicite avec la suite ou le poste de travail.</li>
+        <li>Adapter le niveau de vocabulaire au public, jamais l'inverse.</li>
+        <li>Se deplacer dans la salle plutot que de rester fixe derriere l'ecran.</li>
+        <li>Reformuler une objection avant d'y repondre, pour montrer qu'elle a ete entendue.</li>
+      </ul>
+    </div>
+    <div class="col-box col-dont">
+      <h3>A ne pas faire</h3>
+      <ul>
+        <li>Ne pas repondre a sa propre question apres l'avoir posee au groupe.</li>
+        <li>Ne pas lire ses slides mot pour mot.</li>
+        <li>Ne pas promettre ce qu'on ne sait pas tenir, ni sur les delais ni sur les resultats.</li>
+        <li>Ne pas ignorer un participant qui decroche visiblement.</li>
+        <li>Ne pas enchainer les exercices sans jamais reprendre la main sur le temps.</li>
+        <li>Ne pas repondre a une objection de valeur avec un argument d'efficacite.</li>
+        <li>Ne pas couper la parole d'un participant pour reprendre son propre fil.</li>
+        <li>Ne pas utiliser un exemple hors du domaine du public sans le traduire.</li>
+        <li>Ne pas se justifier pendant le debrief de 60 secondes qui suit son propre passage.</li>
+        <li>Ne pas confondre animer une sequence et faire un expose.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="metier">
+  <div class="section-head">
+    <span class="step-num">7</span>
+    <h2>Adapter au metier de la salle</h2>
+  </div>
+  <p class="lead">Un savoir doit etre contextualise pour devenir transferable. Un exemple hors domaine impose une traduction supplementaire avant d'etre compris, et cette traduction casse l'attention, meme quand elle reste possible mentalement.</p>
+
+  <div class="card">
+    <p>Devant des architectes, on parle plans, permis de construire, coefficients d'occupation des sols, pas de tableurs financiers. Devant des avocats, on parle textes de loi, jurisprudence, delais de procedure, pas de code informatique. L'exemple doit tomber juste dans le vocabulaire du metier, sinon la charge cognitive de traduction prend le pas sur la comprehension du concept lui meme.</p>
+  </div>
+
+  <div class="table-scroll">
+    <table class="narrow">
+      <thead>
+        <tr>
+          <th>Metier de la salle</th>
+          <th>Exemple d'accroche a utiliser</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Architectes</td>
+          <td>Generer une premiere ebauche de note de presentation de permis a partir d'un plan, verifiee ensuite par l'architecte.</td>
+        </tr>
+        <tr>
+          <td>Avocats</td>
+          <td>Resumer un jeu de pieces volumineux avant une audience, en citant les passages precis, verifie ligne a ligne.</td>
+        </tr>
+        <tr>
+          <td>Commerciaux</td>
+          <td>Preparer un compte rendu de rendez-vous structure a partir de notes prises en direct, pret a envoyer au client.</td>
+        </tr>
+        <tr>
+          <td>Ressources humaines</td>
+          <td>Trier une premiere liste de candidatures selon des criteres explicites, la decision finale restant humaine.</td>
+        </tr>
+        <tr>
+          <td>Comptables et gestionnaires</td>
+          <td>Reperer des anomalies dans un tableau de depenses avant validation, comme un premier controle avant l'oeil humain.</td>
+        </tr>
+        <tr>
+          <td>Enseignants et formateurs</td>
+          <td>Generer trois variantes d'un meme exercice pour differencier selon le niveau des apprenants.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="tourdetable">
+  <div class="section-head">
+    <span class="step-num">8</span>
+    <h2>Le tour de table</h2>
+  </div>
+  <p class="lead">Son objet reel n'est pas de faire connaissance. C'est un outil de reperage.</p>
+
+  <div class="card">
+    <p>Pendant le tour de table du matin, trois choses se reperent, pas une seule : les attentes exprimees par chacun, les enjeux reels derriere ces attentes, souvent non dits directement, et surtout qui va jouer le role de promoteur dans le groupe et qui va jouer celui de refractaire, tel que decrit en section 4.</p>
+    <p><strong>Comment le reexploiter dans la journee, au lieu de le laisser mourir a 9h10 :</strong> notez mentalement ou sur un carnet qui a formule quel enjeu. Quand une sequence touche a cet enjeu precis plus tard dans la journee, reconvoquez la personne par son prenom et son propos d'ouverture : « tu disais ce matin que ton enjeu c'etait X, regarde comment cette sequence y repond directement ». Cette reprise, a elle seule, transforme un tour de table de rituel creux en fil conducteur visible de toute la journee.</p>
+  </div>
+</section>
+
+<section id="evaluation">
+  <div class="section-head">
+    <span class="step-num">9</span>
+    <h2>Ce qui est evalue vendredi</h2>
+  </div>
+  <p class="lead">Vous savez des ce matin ou vous allez. L'evaluation individuelle a lieu vendredi 11 septembre.</p>
+
+  <div class="card">
+    <p><strong>Format :</strong> une animation individuelle de 6 minutes, notee sur une grille de 12 criteres, dans la continuite directe des six domaines de la grille d'observation de la section 2.</p>
+  </div>
+
+  <div class="elim">
+    <strong>Critere eliminatoire, independant de la note sur 12 criteres :</strong> respect du cadre. Trois conditions non negociables, la moindre entorse invalide la prestation quel que soit le niveau pedagogique par ailleurs.
+    <ul class="checklist" style="margin-top:0.6rem">
+      <li><span class="box"></span> Aucune mise en cause d'une personne, presente ou absente.</li>
+      <li><span class="box"></span> Aucun propos discriminatoire, sous quelque forme que ce soit.</li>
+      <li><span class="box"></span> Aucune divulgation d'information confidentielle sur un client.</li>
+    </ul>
+  </div>
+
+  <div class="not-eval">
+    <strong>Ce qui n'est pas evalue :</strong> le charisme, l'aisance naturelle, l'orthographe, la vitesse d'elocution, l'accent. La grille juge la pedagogie, pas la performance de scene.
+  </div>
+</section>
+
+<footer class="page-footer">
+  Kit participants, Journee 4, Referent IA, Agence Nikita. Prepare pour la formation du 10 septembre 2026 a Lyon.
+</footer>
+
+</div>
+
+</body>
+</html>
