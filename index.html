@@ -326,13 +326,30 @@ footer.page-footer{
   text-align:center;
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Durcissement responsive, ajoute apres controle du rendu mobile reel */
+html{ -webkit-text-size-adjust:100%; }
+*, *::before, *::after{ box-sizing:border-box; }
+html, body{ max-width:100%; overflow-x:hidden; }
+img, svg, video{ max-width:100%; height:auto; }
+h1, h2, h3, p, li, td, th, .pill, button{ overflow-wrap:anywhere; word-break:normal; }
+pre, code{ white-space:pre-wrap; overflow-wrap:anywhere; }
+.in, .wrap, main, section, header .in{ max-width:100%; }
+table{ width:100%; }
+@media (max-width: 560px){
+  header h1{ font-size:1.45rem; line-height:1.2; }
+  .hero-meta{ gap:6px; }
+  .pill{ font-size:12px; padding:5px 10px; }
+  nav a{ font-size:13px; padding:7px 10px; }
+  body{ font-size:15.5px; }
+}
 </style>
 </head>
 <body>
 
 <header class="hero"><div class="in">
   <p class="eyebrow">Nikita, Référent IA, Lyon</p>
-  <h1>Kit participants, Journée 4, mercredi 10 septembre 2026</h1>
+  <h1>Kit participants, Journée 4, jeudi 10 septembre 2026</h1>
   <p>Vous n'apprenez pas l'IA aujourd'hui, vous apprenez à la transmettre. Vous animez, vous êtes observés, vous débriefez.</p>
   <div class="hero-meta">
     <span class="pill">20 séquences</span>
