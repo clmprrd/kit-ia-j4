@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Check-up Semaine 1</title>
+<style>
+:root{
+  color-scheme: light;
+  --paper:#F5F4F1; --card:#FFFFFF;
+  --ink:#1A1A1A; --ink-2:#4A4A4A; --ink-3:#7C838C;
+  --rule:#E2E0DA; --rule-strong:#C9C6BE;
+  --nav:#1A1A1A; --nav-ink:#FFFFFF;
+  --acc:#E91FCB; --acc-soft:#FCE4F7;
+  --ok:#1F7A4D; --ok-soft:#EAF6EF;
+  --ko:#B3327E; --ko-soft:#FCEFF8;
+  --shadow:0 1px 2px rgba(20,24,30,.06), 0 6px 20px rgba(20,24,30,.07);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --paper:#101014; --card:#18181D;
+    --ink:#F1EFEA; --ink-2:#B4BAC2; --ink-3:#848B94;
+    --rule:#282D35; --rule-strong:#3A4049;
+    --nav:#08080A; --nav-ink:#FFFFFF;
+    --acc:#F571DF; --acc-soft:#2A1026;
+    --ok:#5FC08C; --ok-soft:#12241A;
+    --ko:#F571B4; --ko-soft:#2A101F;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 6px 20px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --paper:#101014; --card:#18181D;
+  --ink:#F1EFEA; --ink-2:#B4BAC2; --ink-3:#848B94;
+  --rule:#282D35; --rule-strong:#3A4049;
+  --nav:#08080A; --nav-ink:#FFFFFF;
+  --acc:#F571DF; --acc-soft:#2A1026;
+  --ok:#5FC08C; --ok-soft:#12241A;
+  --ko:#F571B4; --ko-soft:#2A101F;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 6px 20px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{background:var(--paper); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  font-size:16px; line-height:1.55}
+.app{max-width:660px; margin:0 auto; padding:0 16px 60px}
+header{background:var(--nav); color:var(--nav-ink); padding:22px 16px 18px}
+.hin{max-width:660px; margin:0 auto}
+.eyebrow{font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--acc); margin:0 0 8px; font-weight:700}
+h1{font-weight:700; font-size:clamp(22px,5vw,30px); margin:0 0 8px; letter-spacing:-.02em; line-height:1.15}
+header p{margin:0; font-size:14px; color:#C9C9C9}
+.bar{height:5px; background:var(--rule); border-radius:3px; overflow:hidden; margin:18px 0 6px}
+.bar i{display:block; height:100%; background:var(--acc); width:0%; transition:width .3s}
+.meta{display:flex; justify-content:space-between; font-size:13px; color:var(--ink-3); margin-bottom:16px}
+.card{background:var(--card); border:1px solid var(--rule); border-radius:14px; padding:22px 20px; box-shadow:var(--shadow)}
+.tags{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px}
+.tag{display:inline-block; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--acc); background:var(--acc-soft); padding:4px 10px; border-radius:20px}
+.tag.anim{color:var(--ink); background:var(--rule)}
+.q{font-weight:700; font-size:19px; line-height:1.35; margin:0 0 18px}
+.opts{display:flex; flex-direction:column; gap:9px}
+button.opt{text-align:left; font:inherit; font-size:15px; color:var(--ink); cursor:pointer;
+  background:var(--paper); border:1.5px solid var(--rule-strong); border-radius:10px;
+  padding:14px 16px; line-height:1.45; transition:border-color .15s, background .15s;
+  display:flex; gap:11px; align-items:flex-start}
+button.opt:hover:not(:disabled){border-color:var(--acc)}
+button.opt:disabled{cursor:default}
+button.opt .k{font-weight:700; color:var(--ink-3); flex:0 0 auto}
+button.opt.good{background:var(--ok-soft); border-color:var(--ok)}
+button.opt.good .k{color:var(--ok)}
+button.opt.bad{background:var(--ko-soft); border-color:var(--ko)}
+button.opt.bad .k{color:var(--ko)}
+.fb{margin:16px 0 0; padding:13px 15px; border-radius:10px; font-size:14.5px; line-height:1.5}
+.fb.good{background:var(--ok-soft); border-left:3px solid var(--ok)}
+.fb.bad{background:var(--ko-soft); border-left:3px solid var(--ko)}
+.fb b{display:block; margin-bottom:4px}
+.anim-note{margin-top:10px; padding-top:10px; border-top:1px dashed var(--rule-strong); font-size:13.5px; color:var(--ink-2)}
+.src{margin-top:10px; padding-top:10px; border-top:1px solid var(--rule-strong); font-size:12px; color:var(--ink-3); line-height:1.5}
+.src b{color:var(--ink-3); font-weight:700}
+.next{margin-top:16px; width:100%; font:inherit; font-weight:700; font-size:16px;
+  background:var(--nav); color:var(--nav-ink); border:none; border-radius:10px; padding:15px; cursor:pointer}
+.next:hover{opacity:.9}
+button:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
+.score{font-weight:700; font-size:60px; line-height:1; margin:0 0 4px; letter-spacing:-.03em}
+.score small{font-size:24px; color:var(--ink-3); font-weight:700}
+.verdict{font-size:15px; color:var(--ink-2); margin:0 0 20px}
+.alert{background:var(--acc-soft); border-left:3px solid var(--acc); border-radius:8px; padding:14px 16px; margin:0 0 18px; font-size:14.5px}
+.alert b{display:block; margin-bottom:6px}
+.alert ul{margin:6px 0 0; padding-left:20px}
+.tell{background:var(--rule); border-radius:10px; padding:14px 16px; font-size:14.5px; color:var(--ink-2); margin:0 0 16px}
+.tell b{color:var(--ink)}
+.review{margin-top:22px}
+.review h3{font-size:14px; margin:0 0 10px; color:var(--ink-3); letter-spacing:.06em; text-transform:uppercase}
+.rev{border-top:1px solid var(--rule); padding:12px 0; font-size:14.5px}
+.rev .rq{font-weight:700; margin:0 0 4px}
+.rev .ra{margin:0; color:var(--ink-2)}
+.rev.miss .rq::before{content:"X "; color:var(--ko); font-weight:700}
+.rev.hit .rq::before{content:"OK "; color:var(--ok); font-weight:700}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<header><div class="hin">
+  <p class="eyebrow">Formation Référent IA · Agence Nikita</p>
+  <h1>Check-up Semaine 1</h1>
+  <p>20 questions sur J1, J2 et J3. Chaque question porte la séquence du Jour 1 client où vous en aurez besoin aujourd'hui.</p>
+</div></header>
+
+<div class="app">
+  <div class="bar"><i id="prog"></i></div>
+  <div class="meta"><span id="counter">Question 1 sur 20</span><span id="live">0 point</span></div>
+  <div id="stage"></div>
+</div>
+
+<script>
+const Q = [
+ {d:"J2", seq:"M1.6", q:"Un modèle produit une réponse fausse mais parfaitement formulée. Comment nomme-t-on ce phénomène, et d'où vient-il ?",
+  o:["Une hallucination : le modèle optimise la plausibilité de la suite de mots, pas la véracité",
+     "Un bug : le modèle a mal lu la question, il faut la reformuler",
+     "Une saturation : la fenêtre de contexte a été dépassée",
+     "Un biais : les données d'entraînement contenaient cette erreur précise"],
+  a:0, e:"C'est une hallucination. Un modèle de langage ne vérifie pas les faits : à chaque étape il calcule le mot statistiquement le plus plausible pour continuer la phrase, sans mécanisme interne de vérité. Ce n'est pas un bug (option 2) : le modèle fonctionne normalement, il produit exactement ce pour quoi il a été conçu, une suite plausible de mots. Ce n'est pas non plus une saturation de contexte (option 3) : ce phénomène provoque l'oubli du début d'une conversation, pas l'invention d'un fait. Et ce n'est pas nécessairement un biais des données (option 4) : une hallucination peut survenir même sur un sujet totalement absent des données d'entraînement, simplement parce que le modèle comble un vide par la réponse la plus probable plutôt que d'admettre son ignorance.",
+  src:"Terme documenté dans la littérature de recherche en traitement du langage, notamment le survey de synthèse Ji et al., \"Survey of Hallucination in Natural Language Generation\", ACM Computing Surveys, 2023 : le modèle génère un contenu fluide et plausible mais non fidèle aux faits ou à la source.",
+  anim:"Vous animez ça en M1.6, hallucinations et biais. Le piège en salle : quelqu'un vous demandera si on peut supprimer les hallucinations. La réponse est non, on les réduit et on les rend vérifiables."},
+
+ {d:"J2", seq:"M1.3", q:"Qu'est-ce qu'un token, l'unité de base que traite un modèle de langage ?",
+  o:["Un fragment de mot ou de texte, que le modèle manipule pour lire et générer",
+     "Une phrase complète envoyée en une seule fois",
+     "Un fichier joint à la conversation",
+     "Un identifiant unique de session utilisateur"],
+  a:0, e:"Un token est un fragment de texte, souvent plus petit qu'un mot (une syllabe, un préfixe, un signe de ponctuation), que le modèle manipule sous forme de nombres. Ce n'est pas une phrase entière (option 2) : au contraire, une phrase est découpée en plusieurs dizaines de tokens avant d'être traitée. Ce n'est pas un fichier joint (option 3) : un document joint est lui aussi converti en tokens avant traitement, il n'a pas de statut à part. Et ce n'est pas un identifiant de session (option 4) : cette notion ne concerne pas le contenu du texte mais la gestion technique de la conversation côté serveur, un sujet distinct.",
+  src:"Documentation technique des fournisseurs de modèles (OpenAI, Anthropic) : le texte est segmenté par un tokenizer, généralement de type Byte Pair Encoding (BPE), avant d'être converti en vecteurs numériques traités par le modèle.",
+  anim:"Vous animez ça en M1.3. Une image qui marche en salle : montrer un mot rare découpé en trois morceaux à l'écran."},
+
+ {d:"J2", seq:"M1.3", q:"Que ne sait PAS faire un modèle de langage par défaut, sans outil ni connexion supplémentaire ?",
+  o:["Accéder à des informations en temps réel, ou se souvenir d'une conversation précédente",
+     "Répondre en français",
+     "Générer plusieurs paragraphes de texte",
+     "Comprendre une question mal formulée"],
+  a:0, e:"Sans outil ni connexion ajoutés par le fournisseur, un modèle ne peut ni consulter internet en temps réel ni se souvenir d'une conversation antérieure à la précédente : chaque nouvelle conversation part d'une page blanche. Répondre en français (option 2), générer plusieurs paragraphes (option 3) et comprendre une question mal formulée (option 4) sont au contraire des capacités que le modèle possède nativement, dès l'entraînement, sans aucun outil supplémentaire : ce sont des compétences linguistiques internes, pas des accès à des ressources externes ou à une mémoire persistante.",
+  src:"Documentation produit des fournisseurs (pages d'aide Anthropic et OpenAI sur les limites des modèles) : sans navigation web activée ni mémoire persistante activée, le modèle ne dispose que du contenu de la conversation en cours et de ses connaissances figées à la date d'entraînement.",
+  anim:"C'est le coeur de M1.3, la séquence s'appelle littéralement ce que l'IA NE fait PAS. C'est là que se joue la crédibilité de la journée client : un salarié qui croit que l'outil sait tout sera déçu à midi."},
+
+ {d:"J2", seq:"M1.3", q:"Que se passe-t-il quand une conversation dépasse la fenêtre de contexte ?",
+  o:["Le début est tronqué ou résumé : le modèle oublie les premiers échanges",
+     "Le modèle refuse de répondre et affiche une erreur explicite",
+     "La conversation redémarre automatiquement à zéro",
+     "Le modèle ralentit mais conserve tout l'historique"],
+  a:0, e:"Quand une conversation dépasse la fenêtre de contexte, le système tronque ou résume silencieusement le début des échanges : rien ne prévient l'utilisateur. Le modèle n'affiche pas d'erreur explicite (option 2), c'est justement l'absence de signal qui rend ce phénomène piégeux en usage réel. La conversation ne redémarre pas à zéro (option 3) : les échanges récents restent disponibles, seuls les plus anciens disparaissent. Et le modèle ne ralentit pas en conservant tout (option 4) : c'est l'inverse, il perd de l'information pour rester dans sa limite technique plutôt que de tout garder plus lentement.",
+  src:"Documentation technique des fournisseurs sur la fenêtre de contexte (context window) : au-delà de la limite de tokens du modèle, les échanges les plus anciens sont retirés ou résumés pour respecter la limite, sans notification systématique à l'utilisateur.",
+  anim:"Utile en M1.3 pour expliquer pourquoi il vaut mieux ouvrir une nouvelle conversation que d'en poursuivre une de trois heures."},
+
+ {d:"J1", seq:"M1.8", q:"Combien de niveaux de risque l'AI Act définit-il ?",
+  o:["Quatre","Trois","Cinq","Deux"], a:0,
+  e:"L'AI Act définit quatre niveaux de risque : risque inacceptable (systèmes interdits), risque élevé (obligations renforcées), risque limité (obligation de transparence) et risque minimal (la majorité des usages, sans obligation spécifique). Trois (option 2), cinq (option 3) et deux (option 4) sont à écarter simplement : ce découpage en quatre paliers est la structure centrale du règlement, celle sur laquelle reposent toutes les obligations qui suivent, un chiffre à connaître sans hésitation devant un groupe.",
+  src:"Règlement (UE) 2024/1689 du Parlement européen et du Conseil (AI Act), approche fondée sur les risques exposée dans les considérants du texte : quatre catégories, inacceptable, élevé, limité, minimal.",
+  anim:"Vous animez ça en M1.8. Chiffre à connaître par coeur : si vous hésitez devant le groupe sur un chiffre aussi simple, tout le reste de votre séquence réglementaire perd son autorité."},
+
+ {d:"J1", seq:"M1.8", q:"Que vise l'article 4 de l'AI Act ?",
+  o:["La littératie en IA : l'obligation de former les personnes qui utilisent ces systèmes",
+     "L'interdiction de la reconnaissance faciale en lieu public",
+     "L'obligation de déclarer tout modèle entraîné en Europe",
+     "Le plafonnement des amendes pour les petites entreprises"],
+  a:0, e:"L'article 4 de l'AI Act porte sur la littératie en IA : il impose aux fournisseurs et aux déployeurs de veiller à ce que leur personnel ait un niveau suffisant de compréhension de ces systèmes, c'est la base légale de cette formation elle-même. L'interdiction de la reconnaissance faciale en lieu public (option 2) relève des dispositions sur les pratiques interdites, un autre article. L'obligation de déclarer un modèle entraîné en Europe (option 3) ne correspond à aucune disposition du texte sous cette forme. Le plafonnement des amendes pour les petites entreprises (option 4) existe bien dans le règlement mais ailleurs, dans les dispositions sur les sanctions. Point de vigilance : l'article 4 ne porte lui-même aucune sanction chiffrée, ne jamais citer 15 millions d'euros ou 3 pour cent du chiffre d'affaires à son sujet, ces montants relèvent des dispositions sur les amendes administratives, un autre article du texte.",
+  src:"Règlement (UE) 2024/1689 (AI Act), article 4, teneur proche : les fournisseurs et déployeurs de systèmes d'IA prennent des mesures pour assurer, dans la mesure du possible, un niveau suffisant de littératie en IA de leur personnel.",
+  anim:"En M1.8, quelqu'un vous demandera le montant de l'amende associée à l'article 4. Il n'y en a pas : l'article 4 ne porte aucune sanction chiffrée. Ne jamais citer 15 millions ou 3 pour cent du chiffre d'affaires sur cet article, ces montants relèvent d'autres articles."},
+
+ {d:"J1", seq:"M1.9", q:"Le RGPD impose la minimisation. Qu'implique-t-elle avant d'envoyer une donnée à un modèle ?",
+  o:["N'envoyer que les données nécessaires à la finalité, et pas davantage",
+     "Anonymiser systématiquement toutes les données, sans exception",
+     "Obtenir un consentement écrit pour chaque requête",
+     "Conserver une copie locale de tout ce qui a été envoyé"],
+  a:0, e:"Le principe de minimisation impose de n'envoyer que les données strictement nécessaires à la finalité poursuivie, ni plus ni moins. Anonymiser systématiquement toutes les données sans exception (option 2) va au-delà de ce que demande la minimisation, qui autorise l'usage de données identifiantes quand elles sont réellement nécessaires à la finalité. Le consentement écrit pour chaque requête (option 3) n'est pas une exigence de la minimisation mais relève d'une autre notion, la base légale du traitement, qui peut aussi reposer sur l'intérêt légitime ou l'exécution d'un contrat selon le cas. Conserver une copie locale de tout ce qui a été envoyé (option 4) est même contraire à l'esprit du texte, qui encourage à limiter la conservation, pas à la systématiser.",
+  src:"Règlement (UE) 2016/679 (RGPD), article 5.1.c : les données à caractère personnel doivent être adéquates, pertinentes et limitées à ce qui est nécessaire au regard des finalités pour lesquelles elles sont traitées.",
+  anim:"En M1.9. La question qui tombe toujours : est-ce que je peux coller le CV d'un candidat dans l'outil ? Préparez votre réponse avant, pas pendant."},
+
+ {d:"J3", seq:"M1.9", q:"Que rend possible le Cloud Act, et pourquoi cela concerne-t-il la souveraineté ?",
+  o:["Des autorités américaines peuvent demander des données à un fournisseur soumis au droit américain, où que les données soient hébergées",
+     "Il oblige les fournisseurs américains à héberger les données européennes en Europe",
+     "Il interdit tout transfert de données hors de l'Union européenne",
+     "Il impose le chiffrement de bout en bout sur tous les services cloud"],
+  a:0, e:"Le Cloud Act permet aux autorités américaines de demander l'accès à des données à un fournisseur soumis au droit américain, quel que soit le lieu où ces données sont physiquement hébergées : c'est le critère de nationalité du fournisseur qui prime sur la localisation du datacenter. Il n'oblige en rien les fournisseurs américains à héberger les données européennes en Europe (option 2), c'est même l'inverse de sa logique. Il n'interdit pas les transferts hors de l'Union (option 3), ce sujet relève d'un cadre différent, celui du RGPD sur les transferts internationaux. Et il n'impose aucun chiffrement de bout en bout (option 4), rien dans ce texte américain ne porte sur les standards techniques de sécurité des fournisseurs.",
+  src:"Clarifying Lawful Overseas Use of Data Act (CLOUD Act), 2018, Etats-Unis, qui modifie le Stored Communications Act : il habilite les autorités américaines à exiger d'un fournisseur relevant du droit américain la communication de données, y compris stockées hors des Etats-Unis.",
+  anim:"En M1.9, c'est l'argument qui fait basculer une direction vers une solution locale. C'est aussi celui qu'on caricature le plus vite : restez factuel."},
+
+ {d:"J1", seq:"M1.6", q:"Un biais algorithmique provient-il du modèle ou des données ?",
+  o:["Principalement des données d'entraînement et des choix de conception : le modèle les reproduit et parfois les amplifie",
+     "Uniquement du modèle, c'est-à-dire de son architecture mathématique",
+     "Uniquement des données, le modèle est neutre par construction",
+     "Ni de l'un ni de l'autre : il apparaît à l'usage, selon les utilisateurs"],
+  a:0, e:"Un biais algorithmique provient principalement des données d'entraînement, qui reflètent les déséquilibres du monde réel, et des choix de conception faits par les équipes qui construisent le modèle. Il ne vient pas uniquement de l'architecture mathématique du modèle (option 2) : deux modèles de même architecture entraînés sur des données différentes produiront des biais différents. L'idée que le modèle serait neutre par construction et que seules les données seraient en cause (option 3) est trop absolue : les choix de conception et d'évaluation faits pendant l'entraînement participent eux aussi au biais final. Et dire que le biais n'apparaît qu'à l'usage, sans venir ni du modèle ni des données (option 4), ignore justement sa cause la plus documentée, qui se forme en amont, pendant l'entraînement, pas seulement au moment où l'utilisateur s'en sert.",
+  src:"Travaux de référence sur l'équité algorithmique, dont les recommandations de la CNIL sur les biais dans les systèmes d'IA : les biais proviennent principalement de la composition des données d'entraînement et des choix effectués lors de la conception et de l'évaluation du système.",
+  anim:"En M1.6. C'est la séquence où l'objection éthique arrive le plus souvent. Rappelez-vous la règle du jour : une objection de valeur ne se traite pas par la preuve d'efficacité."},
+
+ {d:"J3", seq:"aujourd'hui", q:"Lequel de ces éléments ne fait PAS partie des six composants d'un prompt ?",
+  o:["La température du modèle",
+     "Le rôle",
+     "Le format de sortie",
+     "L'exemple ou le contre-exemple"],
+  a:0, e:"La température n'est pas un composant du prompt lui-même : c'est un paramètre de réglage du modèle, fixé en dehors du texte du prompt, qui contrôle le niveau d'aléatoire des réponses. Le rôle (option 2), le format de sortie (option 3) et l'exemple ou le contre-exemple (option 4) font au contraire partie des six composants structurants d'un prompt bien construit, aux côtés de l'objectif, du contexte et des contraintes : ce sont des éléments qu'on écrit dans le texte envoyé au modèle, pas des réglages système.",
+  src:"Cadre pédagogique du module de prompting du parcours Référent IA (M1.5) : rôle, objectif, contexte, contraintes, format de sortie, exemple ou contre-exemple, distinct des paramètres de génération comme la température qui se règlent au niveau de l'appel au modèle, pas dans le texte du prompt.",
+  anim:"Ce n'est pas au programme du Jour 1 client, mais vous en aurez besoin dès que quelqu'un vous demandera pourquoi son prompt ne marche pas."},
+
+ {d:"J3", seq:"aujourd'hui", q:"Quelle instruction rend l'anti-hallucination réellement opérante dans un prompt système ?",
+  o:["Autoriser explicitement le modèle à répondre qu'il ne sait pas, ou qu'il ne trouve pas dans les documents fournis",
+     "Lui demander d'être rigoureux et de ne pas se tromper",
+     "Baisser la température au minimum",
+     "Lui interdire de répondre hors sujet"],
+  a:0, e:"Autoriser explicitement le modèle à dire qu'il ne sait pas, ou qu'il ne trouve pas la réponse dans les documents fournis, est l'instruction qui fonctionne réellement : sans cette permission, le modèle a tendance à combler le vide par une réponse plausible plutôt que d'admettre une absence d'information. Demander au modèle d'être rigoureux et de ne pas se tromper (option 2) est un voeu pieux sans effet mesurable, une instruction vague ne change pas le mécanisme qui produit l'hallucination. Baisser la température au minimum (option 3) réduit la variété des réponses mais ne les ancre pas davantage dans des faits vérifiés, une réponse fausse peut très bien être produite à température nulle. Et interdire au modèle de répondre hors sujet (option 4) traite un problème différent, la pertinence du sujet, pas la véracité du contenu.",
+  src:"Bonnes pratiques de prompt engineering documentées notamment par Anthropic, guide de prompt engineering, section sur la réduction des hallucinations : autoriser explicitement le modèle à exprimer son incertitude ou son absence de réponse réduit les réponses inventées.",
+  anim:"À ressortir en M1.6 quand on vous demandera comment on fait concrètement pour limiter les hallucinations. Une réponse concrète vaut mieux qu'un principe."},
+
+ {d:"J2", seq:"M2.1", q:"Que signifie RAG, et quel problème cette approche résout-elle ?",
+  o:["Génération augmentée par la recherche : elle ancre la réponse sur des documents fournis au lieu de la seule mémoire du modèle",
+     "Réglage automatique des gabarits : elle adapte le format de sortie",
+     "Réentraînement assisté et guidé : elle spécialise le modèle sur un métier",
+     "Récupération administrative des garanties : elle trace les sources"],
+  a:0, e:"RAG signifie Retrieval Augmented Generation, génération augmentée par la recherche : le modèle va chercher des passages pertinents dans des documents fournis avant de répondre, ce qui ancre sa réponse sur une source vérifiable plutôt que sur sa seule mémoire figée à l'entraînement. Les trois autres définitions sont des sigles inventés qui ne correspondent à aucune réalité technique reconnue sous ce nom : le RAG ne règle pas automatiquement un gabarit de sortie (option 2), il ne réentraîne pas le modèle sur un métier (option 3, c'est plutôt la définition du fine-tuning), et il ne s'agit pas d'une procédure administrative de traçabilité des garanties (option 4).",
+  src:"Lewis et al., \"Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks\", NeurIPS 2020 : papier de référence qui introduit l'architecture combinant un modèle de récupération de documents et un modèle de génération de texte.",
+  anim:"Utile en M2.1 quand vous positionnerez les outils les uns par rapport aux autres. Ne pas le vendre comme la solution aux hallucinations : il les réduit et les rend vérifiables."},
+
+ {d:"J1", seq:"M1.2", q:"Qu'est-ce qui distingue principalement les grands modèles du marché entre eux (GPT, Claude, Gemini, Llama, Mistral) ?",
+  o:["Leurs données et méthodes d'entraînement, leur taille, leurs réglages de sécurité et d'alignement, qui produisent des styles et des forces différentes",
+     "Uniquement leur prix à l'usage, les modèles se valent tous techniquement",
+     "Uniquement leur nationalité d'origine, américaine ou non",
+     "Rien de mesurable, la différence est purement marketing"],
+  a:0, e:"Les grands modèles diffèrent par leurs données d'entraînement, leur taille (nombre de paramètres), leurs choix d'architecture et surtout leur phase d'alignement (réglages de sécurité, instructions, retour humain), ce qui donne à chacun un style, des forces et des limites propres, un modèle pouvant être meilleur en code, un autre en rédaction, un troisième en raisonnement long. Réduire la différence au seul prix (option 2) ignore des écarts réels de capacité documentés par des évaluations publiques indépendantes. La réduire à la nationalité du fournisseur (option 3) est un critère commercial ou géopolitique, pas un critère technique de qualité du modèle. Et affirmer que la différence est purement marketing (option 4) contredit les comparaisons publiées, qui montrent des écarts mesurables selon les tâches.",
+  src:"Cartes de modèles (model cards) publiées par les fournisseurs (OpenAI, Anthropic, Google, Meta, Mistral) et classements publics indépendants comme LMSYS Chatbot Arena, qui comparent les modèles sur des tâches précises.",
+  anim:"Pas au programme du Jour 1 client, mais vous l'utiliserez dès que quelqu'un demandera pourquoi son entreprise a choisi tel modèle plutôt qu'un autre."},
+
+ {d:"J3", seq:"M1.5", q:"Qu'est-ce qu'un prompt système, et en quoi diffère-t-il du message envoyé par l'utilisateur ?",
+  o:["Une instruction persistante définie en amont, qui cadre le comportement du modèle pour toute la conversation, invisible pour l'utilisateur final",
+     "Le premier message de la conversation, identique en tout point à un message utilisateur classique",
+     "Un message d'erreur que le modèle affiche quand il ne comprend pas la question",
+     "Une fonctionnalité réservée aux développeurs, inutile pour un usage conversationnel classique"],
+  a:0, e:"Le prompt système est une instruction posée en amont de la conversation, qui fixe le rôle, le ton, les contraintes ou le périmètre du modèle pour tous les échanges qui suivent, sans que l'utilisateur final la voie forcément. Ce n'est pas simplement le premier message de la conversation (option 2) : il a un statut différent, plus persistant et plus prioritaire, que les messages utilisateur qui arrivent ensuite. Ce n'est pas un message d'erreur (option 3), une notion totalement différente liée à l'incompréhension d'une requête. Et ce n'est pas réservé aux développeurs (option 4) : c'est exactement ce qu'on configure quand on construit un assistant métier pour des utilisateurs non techniques, c'est le principal levier de personnalisation avant même d'écrire le premier prompt utilisateur.",
+  src:"Documentation des API des fournisseurs, par exemple le rôle system dans l'API OpenAI et le paramètre system dans l'API Anthropic : une instruction de cadrage envoyée en dehors du tour de conversation utilisateur, appliquée à tous les échanges suivants.",
+  anim:"Pas au programme du Jour 1 client, mais indispensable dès qu'un salarié voudra comprendre pourquoi l'assistant maison répond toujours de la même façon."},
+
+ {d:"J3", seq:"M1.5", q:"Donner des exemples 'few-shot' dans un prompt, qu'est-ce que ça veut dire concrètement ?",
+  o:["Montrer au modèle quelques exemples de la tâche déjà résolue, pour qu'il imite le format et le raisonnement attendus",
+     "Réduire volontairement la longueur du prompt à quelques mots pour aller plus vite",
+     "Limiter le nombre de questions posées au modèle au cours d'une session",
+     "Demander au modèle de répondre en quelques mots seulement, de façon très courte"],
+  a:0, e:"Le few-shot consiste à inclure dans le prompt quelques exemples concrets de la tâche déjà traitée, entrée et sortie attendue, pour que le modèle imite le format, le style ou le raisonnement démontré plutôt que de deviner ce qui est attendu. Ce n'est pas une question de longueur du prompt (option 2) : un prompt few-shot est en général plus long qu'un prompt sans exemple, puisqu'il faut ajouter les cas illustratifs. Ce n'est pas non plus une limite du nombre de questions posées pendant une session (option 3), une notion sans rapport avec la structure d'un prompt donné. Et ce n'est pas une consigne de brièveté de la réponse (option 4) : le few-shot porte sur ce qu'on montre en amont, pas sur la longueur demandée en sortie, même si un format court peut par ailleurs être illustré par les exemples.",
+  src:"Brown et al., \"Language Models are Few-Shot Learners\", NeurIPS 2020, article qui introduit et popularise le terme dans le contexte des modèles de langage : quelques exemples démonstratifs suffisent à orienter le comportement du modèle sans réentraînement.",
+  anim:"Pas au programme du Jour 1 client, mais c'est le levier le plus rapide à montrer en démonstration quand un prompt sans exemple déçoit."},
+
+ {d:"J3", seq:"M1.5", q:"Que règle le paramètre de température d'un modèle de langage ?",
+  o:["Le degré d'aléatoire dans le choix du mot suivant : basse, la réponse est plus prévisible, haute, elle est plus variée voire surprenante",
+     "La vitesse à laquelle le modèle génère sa réponse",
+     "Le niveau de politesse du ton employé par le modèle",
+     "La quantité de données que le modèle a le droit de consulter"],
+  a:0, e:"La température règle le degré d'aléatoire dans le choix du mot suivant parmi les candidats probables : une température basse rend la réponse plus déterministe et prévisible, une température haute introduit plus de variété, au risque d'incohérences si elle est poussée trop loin. Elle ne détermine pas la vitesse de génération (option 2), qui dépend de facteurs d'infrastructure sans lien avec ce paramètre. Elle ne règle pas non plus le ton ou la politesse (option 3), qui se pilotent par les instructions du prompt, pas par un paramètre numérique de génération. Et elle ne porte pas sur la quantité de données consultées (option 4), une notion qui relève plutôt du RAG ou de la fenêtre de contexte, pas de la température.",
+  src:"Documentation des API des fournisseurs, paramètre temperature dans les API OpenAI et Anthropic : un facteur qui pondère la distribution de probabilité utilisée pour choisir le prochain token généré.",
+  anim:"Pas au programme du Jour 1 client, mais utile pour expliquer pourquoi deux salariés qui posent la même question obtiennent des réponses légèrement différentes."},
+
+ {d:"J1", seq:"M1.2", q:"Quelle est la différence entre un modèle de langage brut et un assistant conversationnel comme ChatGPT ou Claude ?",
+  o:["L'assistant est un modèle brut ensuite spécialisé, par instruction et retour humain, pour suivre des consignes, dialoguer et refuser certaines demandes",
+     "Aucune différence, les deux termes désignent exactement la même chose",
+     "Le modèle brut est plus récent et plus puissant que l'assistant qui en découle",
+     "L'assistant fonctionne sans aucun modèle de langage sous-jacent, c'est une interface uniquement"],
+  a:0, e:"Un modèle brut, entraîné à prédire le mot suivant sur de vastes corpus, ne sait pas nativement suivre des instructions ni dialoguer de façon fiable : c'est une étape supplémentaire d'entraînement, l'ajustement par instructions et par retour humain, qui le transforme en assistant capable de répondre à des consignes, de tenir une conversation et de refuser certaines demandes. Dire qu'il n'y a aucune différence entre les deux (option 2) ignore précisément cette étape de spécialisation qui change le comportement du modèle. Le modèle brut n'est pas plus récent ni plus puissant que l'assistant qui en découle (option 3) : c'est l'inverse chronologiquement, le modèle brut est la base sur laquelle l'assistant est construit ensuite. Et l'assistant n'est pas une interface sans modèle sous-jacent (option 4) : c'est justement le modèle de langage, spécialisé, qui produit chacune de ses réponses.",
+  src:"Ouyang et al., \"Training language models to follow instructions with human feedback\" (InstructGPT), OpenAI, 2022 : décrit le passage d'un modèle brut à un assistant par ajustement supervisé et apprentissage par renforcement à partir de retour humain (RLHF).",
+  anim:"Pas au programme du Jour 1 client, mais essentiel pour expliquer pourquoi l'outil grand public répond différemment d'une API brute qu'un développeur pourrait manipuler."},
+
+ {d:"J2", seq:"M2.1", q:"En quoi le fine-tuning diffère-t-il du RAG pour spécialiser un modèle sur un métier ?",
+  o:["Le fine-tuning réentraîne les poids du modèle sur des données spécifiques, tandis que le RAG lui fournit des documents externes au moment de la question, sans toucher au modèle",
+     "Les deux termes désignent exactement la même technique, seul le nom change selon le fournisseur",
+     "Le fine-tuning est gratuit et instantané, contrairement au RAG qui nécessite un serveur dédié",
+     "Le RAG modifie durablement le modèle, le fine-tuning se contente d'ajouter des documents à chaque question"],
+  a:0, e:"Le fine-tuning consiste à poursuivre l'entraînement d'un modèle sur un jeu de données spécifique, ce qui modifie durablement ses poids internes, tandis que le RAG laisse le modèle intact et lui fournit, à chaque question, des documents externes récupérés à la volée pour ancrer sa réponse. Ce ne sont pas deux noms pour la même chose (option 2) : l'un modifie le modèle en profondeur et de façon coûteuse, l'autre agit au moment de la réponse sans toucher aux poids. Le fine-tuning n'est ni gratuit ni instantané (option 3) : il demande des données préparées, du calcul et du temps, alors que le RAG peut être mis à jour en changeant simplement les documents fournis. Et l'affirmation inverse (option 4), attribuer la modification durable au RAG et l'ajout de documents au fine-tuning, inverse purement et simplement la définition des deux techniques.",
+  src:"Lewis et al., \"Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks\", NeurIPS 2020, pour le RAG, et documentation des fournisseurs sur le fine-tuning, par exemple les guides de fine-tuning d'OpenAI, qui décrivent le réentraînement des poids sur un jeu de données propriétaire.",
+  anim:"Utile en M2.1 pour trancher la question qui revient tout le temps : faut-il fine-tuner ou faire du RAG. Réponse courte : RAG d'abord, fine-tuning seulement si le RAG ne suffit pas."},
+
+ {d:"J1", seq:"M1.2", q:"Qu'est-ce qu'une donnée d'entraînement, pour un modèle de langage ?",
+  o:["Un contenu utilisé pendant la phase d'entraînement pour ajuster les paramètres du modèle, figé à une date de coupure au-delà de laquelle le modèle n'a rien vu",
+     "Un fichier que l'utilisateur joint à sa conversation pour que le modèle le lise ponctuellement",
+     "Une donnée que le modèle mémorise en temps réel à chaque conversation avec un utilisateur",
+     "Un identifiant technique servant à authentifier l'utilisateur auprès du fournisseur"],
+  a:0, e:"Une donnée d'entraînement est un contenu qui a servi, en amont et une fois pour toutes, à ajuster les paramètres internes du modèle pendant sa phase d'entraînement, avec une date de coupure au-delà de laquelle le modèle n'a strictement rien vu, sauf s'il dispose d'un outil de recherche activé. Ce n'est pas un fichier joint par l'utilisateur en conversation (option 2) : ce document est lu ponctuellement pour répondre à cette conversation précise, il ne modifie pas le modèle et n'est pas conservé comme donnée d'entraînement. Ce n'est pas non plus une mémorisation en temps réel des échanges (option 3) : par défaut, un modèle ne réapprend rien de ses conversations, c'est justement l'un des malentendus les plus fréquents en salle. Et ce n'est pas un identifiant d'authentification (option 4), une notion purement technique de gestion de compte, sans rapport avec le contenu utilisé pour entraîner le modèle.",
+  src:"Documentation des fournisseurs sur la date de coupure des connaissances (knowledge cutoff), publiée dans les model cards : le modèle ne dispose que des données vues jusqu'à cette date, sans mise à jour automatique par les conversations ultérieures.",
+  anim:"Pas au programme du Jour 1 client, mais ça désamorce à l'avance la question sur la confidentialité qui arrivera forcément en M1.9."},
+
+ {d:"J1", seq:"M1.9", q:"Que dit le RGPD quand on envoie des données personnelles dans un prompt à un modèle d'IA tiers ?",
+  o:["C'est un traitement de données personnelles comme un autre : il faut une base légale, minimiser ce qui est envoyé, et savoir qui traite la donnée et où",
+     "Le RGPD ne s'applique pas aux échanges avec un modèle d'IA, ce cadre juridique concerne uniquement les bases de données classiques",
+     "L'envoi est automatiquement licite dès lors que le fournisseur du modèle est basé en Europe",
+     "Il suffit de supprimer la conversation après usage pour que le RGPD ne s'applique plus"],
+  a:0, e:"Envoyer une donnée personnelle dans un prompt reste un traitement de données personnelles au sens du RGPD, ni plus ni moins qu'un enregistrement dans une base de données classique : il faut une base légale pour ce traitement, appliquer le principe de minimisation, et savoir qui est le sous-traitant, où les données sont hébergées et selon quel droit. Dire que le RGPD ne s'applique pas aux échanges avec une IA (option 2) est faux et dangereux : le format de l'outil ne change rien à la nature du traitement. La localisation européenne du fournisseur ne suffit pas non plus à rendre l'envoi automatiquement licite (option 3) : encore faut-il une base légale et un contrat de sous-traitance conforme, la localisation seule ne couvre pas ces exigences. Et supprimer la conversation après usage (option 4) ne fait pas disparaître rétroactivement le traitement qui a eu lieu au moment de l'envoi, la donnée a déjà transité et potentiellement été traitée par le fournisseur avant cette suppression.",
+  src:"Règlement (UE) 2016/679 (RGPD), articles 5 (principes, dont la minimisation), 6 (bases légales) et 28 (sous-traitance) : tout traitement de données personnelles, quel que soit l'outil utilisé, doit reposer sur une base légale et respecter ces principes.",
+  anim:"En M1.9, c'est la synthèse de toute la séquence confidentialité. À faire dire par le groupe plutôt qu'à asséner : demandez-leur d'abord ce qu'ils pensent que le RGPD autorise."}
+];
+
+const order = Q.map(function(q){
+  var idx = q.o.map(function(_,i){return i;});
+  for (var i = idx.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = idx[i]; idx[i] = idx[j]; idx[j] = t;
+  }
+  return idx;
+});
+
+let cur = 0, score = 0, answered = false;
+const log = [];
+const stage = document.getElementById("stage");
+const prog = document.getElementById("prog");
+const counter = document.getElementById("counter");
+const live = document.getElementById("live");
+const KEYS = ["A","B","C","D"];
+
+function render(){
+  const q = Q[cur], ord = order[cur];
+  answered = false;
+  prog.style.width = ((cur) / Q.length * 100) + "%";
+  counter.textContent = "Question " + (cur + 1) + " sur " + Q.length;
+  live.textContent = score + (score > 1 ? " points" : " point");
+
+  const opts = ord.map(function(origIdx, pos){
+    return '<button class="opt" data-orig="' + origIdx + '">' +
+           '<span class="k">' + KEYS[pos] + '</span><span>' + Q[cur].o[origIdx] + '</span></button>';
+  }).join("");
+
+  const seqTag = q.seq === "aujourd'hui"
+    ? '<span class="tag anim">Vu hier</span>'
+    : '<span class="tag anim">Vous l\'animez en ' + q.seq + '</span>';
+
+  stage.innerHTML =
+    '<div class="card">' +
+      '<div class="tags"><span class="tag">' + q.d + '</span>' + seqTag + '</div>' +
+      '<p class="q">' + q.q + '</p>' +
+      '<div class="opts">' + opts + '</div>' +
+      '<div id="fb"></div>' +
+    '</div>';
+
+  stage.querySelectorAll(".opt").forEach(function(b){
+    b.addEventListener("click", function(){ choose(b); });
+  });
+}
+
+function choose(btn){
+  if (answered) return;
+  answered = true;
+  const q = Q[cur];
+  const picked = parseInt(btn.dataset.orig, 10);
+  const right = picked === q.a;
+  if (right) score++;
+  log.push({q:q.q, ok:right, e:q.e, seq:q.seq});
+
+  stage.querySelectorAll(".opt").forEach(function(b){
+    b.disabled = true;
+    const oi = parseInt(b.dataset.orig, 10);
+    if (oi === q.a) b.classList.add("good");
+    else if (b === btn) b.classList.add("bad");
+  });
+
+  document.getElementById("fb").innerHTML =
+    '<div class="fb ' + (right ? "good" : "bad") + '">' +
+      '<b>' + (right ? "Correct" : "Ce n'est pas ça") + '</b>' + q.e +
+      '<div class="anim-note">' + q.anim + '</div>' +
+      '<div class="src"><b>Source. </b>' + q.src + '</div>' +
+    '</div>' +
+    '<button class="next" id="nx">' +
+      (cur === Q.length - 1 ? "Voir mon résultat" : "Question suivante") +
+    '</button>';
+
+  live.textContent = score + (score > 1 ? " points" : " point");
+  document.getElementById("nx").addEventListener("click", function(){
+    cur++;
+    if (cur < Q.length) render(); else finish();
+  });
+  document.getElementById("nx").focus();
+}
+
+function finish(){
+  prog.style.width = "100%";
+  counter.textContent = "Terminé";
+  live.textContent = score + " / " + Q.length;
+
+  const pct = Math.round(score / Q.length * 100);
+
+  const seqRatees = {};
+  log.forEach(function(l){
+    if (!l.ok && l.seq !== "aujourd'hui"){
+      seqRatees[l.seq] = (seqRatees[l.seq] || 0) + 1;
+    }
+  });
+  const seqs = Object.keys(seqRatees);
+
+  let verdict;
+  if (pct >= 85) verdict = "Au-dessus du seuil de 85 pour cent exigé à la certification de J20. C'est le niveau attendu.";
+  else if (pct >= 70) verdict = "Bon niveau, mais sous le seuil de 85 pour cent exigé à la certification de J20.";
+  else verdict = "Sous le seuil de certification. Les questions manquées sont vos points de travail.";
+
+  let alerte = "";
+  if (seqs.length){
+    alerte = '<div class="alert"><b>À revoir avant de monter animer</b>' +
+      'Vous avez manqué des questions portant sur des séquences que quelqu\'un va animer aujourd\'hui :' +
+      '<ul>' + seqs.map(function(s){
+        return '<li><b>' + s + '</b> : ' + seqRatees[s] + ' question' + (seqRatees[s]>1?'s':'') + ' manquée' + (seqRatees[s]>1?'s':'') + '</li>';
+      }).join("") + '</ul></div>';
+  } else {
+    alerte = '<div class="alert"><b>Rien à revoir avant de monter</b>' +
+      'Aucune erreur sur les contenus que vous allez animer aujourd\'hui.</div>';
+  }
+
+  const review = log.map(function(l, i){
+    return '<div class="rev ' + (l.ok ? "hit" : "miss") + '">' +
+             '<p class="rq">' + (i+1) + '. ' + l.q + '</p>' +
+             (l.ok ? "" : '<p class="ra">' + l.e + '</p>') +
+           '</div>';
+  }).join("");
+
+  stage.innerHTML =
+    '<div class="card">' +
+      '<p class="score">' + score + '<small> / ' + Q.length + '</small></p>' +
+      '<p class="verdict">' + verdict + '</p>' +
+      alerte +
+      '<div class="tell">Donnez votre score <b>' + score + ' sur ' + Q.length + '</b> au formateur. Les résultats de la promotion sont transmis à Nikita, sans détail individuel.</div>' +
+      '<div class="review"><h3>Votre relevé</h3>' + review + '</div>' +
+    '</div>';
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+render();
+</script>
+
+</body>
+</html>
